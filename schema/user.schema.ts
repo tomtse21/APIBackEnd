@@ -19,7 +19,7 @@ export const user = {
       },
       "dateregistered": {
         "description": "reg time",
-        "type": "string"
+        "type": ""
       },
       "password": {
         "description": "password",
@@ -38,5 +38,5 @@ export const user = {
         "type": "string"
       },
     },
-    "required": ["username", "password", "email"]
+    "required": ["username", "password"]
   }

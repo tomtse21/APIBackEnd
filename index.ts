@@ -5,6 +5,7 @@ import json from "koa-json";
 import passport from 'koa-passport';
 
 import { router as articles } from "./routes/articles";
+import { router as users } from "./routes/users";
 import { router as special } from './routes/special';
 
 var serve = require('koa-static-server')
@@ -23,8 +24,9 @@ router.get('/api/v1', welcomeAPI);*/
 app.use(cors());
 app.use(logger());
 app.use(json());
+
 app.use(passport.initialize());
-//app.use(router.routes());
+app.use(users.middleware());
 app.use(articles.middleware());
 app.use(special.middleware());
 

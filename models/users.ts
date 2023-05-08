@@ -1,3 +1,4 @@
+import debug from 'debug';
 import * as db from '../helpers/database';
 
 export const findByUsername = async (username: string) => {
@@ -15,6 +16,8 @@ export const regUser = async(user: any) => {
     param += '? ,';
   }
   param=param.slice(0, -1);
+
+  
   let query = `INSERT INTO users (${key}) VALUES (${param})`;
   try {
     await db.run_insert(query, values);
@@ -22,4 +25,10 @@ export const regUser = async(user: any) => {
   } catch(err: any) {
     return err;
   }
+}
+
+export const login = async (username: string) => {
+  const query = 'SELECT * from users where username = ?';
+  const user = await db.run_query(query, [username]);
+  return user;
 }
