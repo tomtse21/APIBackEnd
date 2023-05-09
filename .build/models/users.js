@@ -24,7 +24,9 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 var users_exports = {};
 __export(users_exports, {
-  findByUsername: () => findByUsername
+  findByUsername: () => findByUsername,
+  login: () => login,
+  regUser: () => regUser
 });
 module.exports = __toCommonJS(users_exports);
 var db = __toESM(require("../helpers/database"));
@@ -33,8 +35,32 @@ const findByUsername = async (username) => {
   const user = await db.run_query(query, [username]);
   return user;
 };
+const regUser = async (user) => {
+  let keys = Object.keys(user);
+  let values = Object.values(user);
+  let key = keys.join(",");
+  let param = "";
+  for (let i = 0; i < values.length; i++) {
+    param += "? ,";
+  }
+  param = param.slice(0, -1);
+  let query = `INSERT INTO users (${key}) VALUES (${param})`;
+  try {
+    await db.run_insert(query, values);
+    return { status: 201 };
+  } catch (err) {
+    return err;
+  }
+};
+const login = async (username, password) => {
+  const query = "SELECT * from users where username = ? and password = ?";
+  const user = await db.run_query(query, [username, password]);
+  return user;
+};
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  findByUsername
+  findByUsername,
+  login,
+  regUser
 });
 //# sourceMappingURL=users.js.map

@@ -18,11 +18,15 @@ var __copyProps = (to, from, except, desc) => {
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 var validation_exports = {};
 __export(validation_exports, {
-  validateArticle: () => validateArticle
+  validateArticle: () => validateArticle,
+  validateCat: () => validateCat,
+  validateUser: () => validateUser
 });
 module.exports = __toCommonJS(validation_exports);
 var import_jsonschema = require("jsonschema");
 var import_article = require("../schema/article.schema");
+var import_cat = require("../schema/cat.schema");
+var import_user = require("../schema/user.schema");
 const v = new import_jsonschema.Validator();
 const validateArticle = async (ctx, next) => {
   const validationOptions = {
@@ -42,8 +46,46 @@ const validateArticle = async (ctx, next) => {
     }
   }
 };
+const validateUser = async (ctx, next) => {
+  const validationOptions = {
+    throwError: true,
+    allowUnknownAttributes: false
+  };
+  const body = ctx.request.body;
+  try {
+    v.validate(body, import_user.user, validationOptions);
+    await next();
+  } catch (error) {
+    if (error instanceof import_jsonschema.ValidationError) {
+      ctx.body = error;
+      ctx.status = 400;
+    } else {
+      throw error;
+    }
+  }
+};
+const validateCat = async (ctx, next) => {
+  const validationOptions = {
+    throwError: true,
+    allowUnknownAttributes: false
+  };
+  const body = ctx.request.body;
+  try {
+    v.validate(body, import_cat.cat, validationOptions);
+    await next();
+  } catch (error) {
+    if (error instanceof import_jsonschema.ValidationError) {
+      ctx.body = error;
+      ctx.status = 400;
+    } else {
+      throw error;
+    }
+  }
+};
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  validateArticle
+  validateArticle,
+  validateCat,
+  validateUser
 });
 //# sourceMappingURL=validation.js.map

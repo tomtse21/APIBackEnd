@@ -1,7 +1,7 @@
 {
   "version": 3,
-  "sources": [],
-  "sourcesContent": [],
-  "mappings": "",
-  "names": []
+  "sources": ["../../routes/users.ts"],
+  "sourcesContent": ["import Router, { RouterContext } from \"koa-router\";\nimport bodyParser from \"koa-bodyparser\";\nimport * as model from \"../models/users\";\nimport { validateUser } from \"../controllers/validation\";\nimport { basicAuth } from \"../controllers/auth\";\n\nconst router = new Router({ prefix: '/api/v1/users' });\n\nconst regUser = async(ctx: RouterContext, next: any) => {\n    const body = ctx.request.body;\n    let result = await model.regUser(body)\n    if (result.status == 201) {\n      ctx.status = 201;\n      ctx.body = body;\n    } else {\n      ctx.status = 500;\n      ctx.body = { err: \"insert data failed\" };\n    }\n    await next();\n}\n\n\nconst login = async(ctx: RouterContext, next: any) => {\n  var obj = JSON.parse(ctx.request.rawBody);\n\n  let result = await model.login(obj['username'],obj['password'])\n\n  if (result.length == 1 ) {\n    ctx.status = 200;\n    ctx.body = result;\n  } else if(result.length == 0 ) {\n    ctx.status = 500;\n    ctx.body = { err: \"Fail to login, please chcek your username or pssword\"};\n  }\n  await next();\n}\n\nrouter.post('/', bodyParser(), regUser);\nrouter.post('/login', bodyParser(),  login); // when using auth login please use basicAuth and validateXXX\n\n\nexport {router};"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,wBAAsC;AACtC,4BAAuB;AACvB,YAAuB;AAIvB,MAAM,SAAS,IAAI,kBAAAA,QAAO,EAAE,QAAQ,gBAAgB,CAAC;AAErD,MAAM,UAAU,OAAM,KAAoB,SAAc;AACpD,QAAM,OAAO,IAAI,QAAQ;AACzB,MAAI,SAAS,MAAM,MAAM,QAAQ,IAAI;AACrC,MAAI,OAAO,UAAU,KAAK;AACxB,QAAI,SAAS;AACb,QAAI,OAAO;AAAA,EACb,OAAO;AACL,QAAI,SAAS;AACb,QAAI,OAAO,EAAE,KAAK,qBAAqB;AAAA,EACzC;AACA,QAAM,KAAK;AACf;AAGA,MAAM,QAAQ,OAAM,KAAoB,SAAc;AACpD,MAAI,MAAM,KAAK,MAAM,IAAI,QAAQ,OAAO;AAExC,MAAI,SAAS,MAAM,MAAM,MAAM,IAAI,aAAY,IAAI,WAAW;AAE9D,MAAI,OAAO,UAAU,GAAI;AACvB,QAAI,SAAS;AACb,QAAI,OAAO;AAAA,EACb,WAAU,OAAO,UAAU,GAAI;AAC7B,QAAI,SAAS;AACb,QAAI,OAAO,EAAE,KAAK,uDAAsD;AAAA,EAC1E;AACA,QAAM,KAAK;AACb;AAEA,OAAO,KAAK,SAAK,sBAAAC,SAAW,GAAG,OAAO;AACtC,OAAO,KAAK,cAAU,sBAAAA,SAAW,GAAI,KAAK;",
+  "names": ["Router", "bodyParser"]
 }

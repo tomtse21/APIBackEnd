@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../schema/cat.schema.ts"],
+  "sourcesContent": ["export const cat = {\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"id\": \"/cat\",\n  \"title\": \"Article\",\n  \"description\": \"An article in the blog\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"name\": {\n      \"description\": \"name of cat\",\n      \"type\": \"string\"\n    },\n    \"type\": {\n      \"description\": \"tpye of cat\",\n      \"type\": \"string\"\n    },\n    \"decs\": {\n      \"description\": \"cat description\",\n      \"type\": \"string\"\n    },\n    \"url\": {\n      \"description\": \"URL for main image to show in cat list\",\n      \"type\": \"uri\"\n    },\n    \"adopt\": {\n      \"description\": \"Is the cat adpot or not\",\n      \"type\": \"boolean\"\n    }\n  },\n  \"required\": [\"name\"]\n}"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAO,MAAM,MAAM;AAAA,EACjB,WAAW;AAAA,EACX,MAAM;AAAA,EACN,SAAS;AAAA,EACT,eAAe;AAAA,EACf,QAAQ;AAAA,EACR,cAAc;AAAA,IACZ,QAAQ;AAAA,MACN,eAAe;AAAA,MACf,QAAQ;AAAA,IACV;AAAA,IACA,QAAQ;AAAA,MACN,eAAe;AAAA,MACf,QAAQ;AAAA,IACV;AAAA,IACA,QAAQ;AAAA,MACN,eAAe;AAAA,MACf,QAAQ;AAAA,IACV;AAAA,IACA,OAAO;AAAA,MACL,eAAe;AAAA,MACf,QAAQ;AAAA,IACV;AAAA,IACA,SAAS;AAAA,MACP,eAAe;AAAA,MACf,QAAQ;AAAA,IACV;AAAA,EACF;AAAA,EACA,YAAY,CAAC,MAAM;AACrB;",
+  "names": []
+}
