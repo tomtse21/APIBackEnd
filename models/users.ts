@@ -27,8 +27,8 @@ export const regUser = async(user: any) => {
   }
 }
 
-export const login = async (username: string) => {
-  const query = 'SELECT * from users where username = ?';
-  const user = await db.run_query(query, [username]);
+export const login = async (username: string, password: string) => {
+  const query = 'SELECT * from users where username = ? and password = ?';
+  const user = await db.run_query(query, [username,password]);
   return user;
 }

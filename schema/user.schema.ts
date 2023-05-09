@@ -37,6 +37,10 @@ export const user = {
         "description": "nth",
         "type": "string"
       },
+      "usertype":{
+        "description": "emaill of user",
+        "type": "string"
+      }
     },
     "required": ["username", "password"]
   }
