@@ -6,6 +6,7 @@ import passport from 'koa-passport';
 
 import { router as articles } from "./routes/articles";
 import { router as users } from "./routes/users";
+import { router as cats } from "./routes/cats";
 import { router as special } from './routes/special';
 
 var serve = require('koa-static-server')
@@ -27,6 +28,7 @@ app.use(json());
 
 app.use(passport.initialize());
 app.use(users.middleware());
+app.use(cats.middleware());
 app.use(articles.middleware());
 app.use(special.middleware());
 

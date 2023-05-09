@@ -1,17 +1,14 @@
 import Router, { RouterContext } from "koa-router";
 import bodyParser from "koa-bodyparser";
-import * as model from "../models/cat";
-import { validateArticle } from "../controllers/validation";
+import * as model from "../models/cats";
+import { validateCat } from "../controllers/validation";
 import { basicAuth } from "../controllers/auth";
 
 const router = new Router({ prefix: '/api/v1/cats' });
 
 
 const cats = [
-  { title: 'Hello article', fullText: 'some text to fill the body' },
-  { title: 'another article', fullText: 'again here is some text here to fill' },
-  { title: 'coventry university', fullText: 'some news about coventry university' },
-  { title: 'smart campus', fullText: 'smart campus is coming to IVE' }
+  { name: 'Hello article', fullText: 'some text to fill the body' }
 ];
 
 const getAll = async (ctx: RouterContext, next: any) => {
@@ -26,14 +23,7 @@ const getAll = async (ctx: RouterContext, next: any) => {
 }
 
 
-const createArticle = async (ctx: RouterContext, next: any) => {
-  /*let c: any = ctx.request.body;
-  let title = c.title;
-  let fullText = c.fullText;
-  let newArticle = {title: title, fullText: fullText};
-  cats.push(newArticle);
-  ctx.status = 201;
-  ctx.body = newArticle;*/
+const createCat = async (ctx: RouterContext, next: any) => {
   const body = ctx.request.body;
   let result = await model.add(body);
   if (result.status == 201) {
@@ -50,11 +40,9 @@ const updateCat = async (ctx: RouterContext, next: any) => {
   let id = +ctx.params.id;
   //let {title, fullText} = ctx.request.body;
   let c: any = ctx.request.body;
-  let title = c.title;
-  let fullText = c.fullText;
+  let name = c.name;
   if ((id < cats.length + 1) && (id > 0)) {
-    cats[id - 1].title = title;
-    cats[id - 1].fullText = fullText;
+    cats[id - 1].name = name;
     ctx.status = 200;
     ctx.body = cats;
   } else {
@@ -63,7 +51,7 @@ const updateCat = async (ctx: RouterContext, next: any) => {
   await next();
 }
 
-const deleteArticle = async (ctx: RouterContext, next: any) => {
+const deleteCat = async (ctx: RouterContext, next: any) => {
   let id = +ctx.params.id;
   if ((id < cats.length + 1) && (id > 0)) {
     cats.splice(id - 1, 1);
@@ -76,7 +64,7 @@ const deleteArticle = async (ctx: RouterContext, next: any) => {
 }
 
 router.get('/', getAll);
-router.post('/', basicAuth, bodyParser(), validateCat, createCat);
+router.post('/', basicAuth, bodyParser(), createCat);
 router.put('/:id([0-9]{1,})', basicAuth, bodyParser(), updateCat);
 router.delete('/:id([0-9]{1,})', basicAuth, deleteCat);
 

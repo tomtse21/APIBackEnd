@@ -1,8 +1,8 @@
 export const cat = {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "id": "/cat",
-  "title": "Article",
-  "description": "An article in the blog",
+  "title": "Cat",
+  "description": "An Cat in the Shelter",
   "type": "object",
   "properties": {
     "name": {
@@ -17,13 +17,21 @@ export const cat = {
       "description": "cat description",
       "type": "string"
     },
-    "url": {
+    "imageuri": {
       "description": "URL for main image to show in cat list",
       "type": "uri"
     },
-    "adopt": {
+    "adopted": {
       "description": "Is the cat adpot or not",
       "type": "boolean"
+    },
+    "datecreated": {
+      "description": "Is the cat adpot or not",
+      "type": ""
+    },
+    "datemodified": {
+      "description": "Is the cat adpot or not",
+      "type": ""
     }
   },
   "required": ["name"]
