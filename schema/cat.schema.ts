@@ -13,7 +13,7 @@ export const cat = {
       "description": "tpye of cat",
       "type": "string"
     },
-    "decs": {
+    "description": {
       "description": "cat description",
       "type": "string"
     },

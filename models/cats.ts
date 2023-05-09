@@ -23,6 +23,7 @@ export const add = async(cat: any) => {
   }
   param=param.slice(0, -1);
   let query = `INSERT INTO cats (${key}) VALUES (${param})`;
+
   try {
     await db.run_insert(query, values);
     return {status: 201};

@@ -16,9 +16,8 @@ export const regUser = async(user: any) => {
     param += '? ,';
   }
   param=param.slice(0, -1);
-
-  
   let query = `INSERT INTO users (${key}) VALUES (${param})`;
+  console.log(query)
   try {
     await db.run_insert(query, values);
     return {status: 201};
