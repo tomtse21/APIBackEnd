@@ -26,11 +26,23 @@ export const cat = {
       "type": "boolean"
     },
     "datecreated": {
-      "description": "Is the cat adpot or not",
+      "description": "date create time",
       "type": ""
     },
     "datemodified": {
-      "description": "Is the cat adpot or not",
+      "description": "date modified time",
+      "type": ""
+    },
+    "age": {
+      "description": "age of cat",
+      "type": ""
+    },
+    "color": {
+      "description": "color of cat",
+      "type": ""
+    },
+    "foundlocation": {
+      "description": "where found the cat",
       "type": ""
     }
   },
