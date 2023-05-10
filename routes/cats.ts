@@ -53,15 +53,28 @@ const updateCat = async (ctx: RouterContext, next: any) => {
 
 const deleteCat = async (ctx: RouterContext, next: any) => {
   let id = +ctx.params.id;
-  if ((id < cats.length + 1) && (id > 0)) {
-    cats.splice(id - 1, 1);
-    ctx.status = 200;
-    ctx.body = cats;
+  let article = await model.deleteCat(id);
+  if (article.status==201) {
+    ctx.status = 201
+    ctx.body = { msg: "Deleted" }
+  } else {
+    ctx.status = 404;
+    ctx.body = { msg: "Error" }
+  }
+  await next();
+}
+
+const getById = async (ctx: RouterContext, next: any) => {
+  let id = ctx.params.id;
+  let article = await model.getById(id);
+  if (article.length) {
+    ctx.body = article[0];
   } else {
     ctx.status = 404;
   }
   await next();
 }
+
 
 router.get('/', getAll);
 router.post('/', basicAuth, bodyParser(), createCat);

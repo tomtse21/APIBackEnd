@@ -1,14 +1,14 @@
 import * as db from '../helpers/database';
 
 export const getById = async (id: any) => {
-  let query = 'SELECT * FROM cats WHERE ID = ?';
+  let query = 'SELECT * FROM cats WHERE ID = ? and adopted = false';
   let values = [id];
   let data = await db.run_query(query, values);
   return data;
 }
 
 export const getAll = async() => {
-  let query = 'SELECT * FROM cats';
+  let query = 'SELECT * FROM cats where adopted = false';
   let data = await db.run_query(query, null);
   return data;
 }
@@ -30,4 +30,17 @@ export const add = async(cat: any) => {
   } catch(err: any) {
     return err;
   }
+}
+
+export const deleteCat = async(id: any) => {
+  let query = 'Update cats set adopted = true where id = ?';
+  let values = [id];
+  console.log(query)
+  try {
+    await db.run_query(query, values);
+    return {status: 201};
+  } catch(err: any) {
+    return err;
+  }
+
 }
