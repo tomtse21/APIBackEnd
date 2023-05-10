@@ -9,7 +9,7 @@ import { router as users } from "./routes/users";
 import { router as cats } from "./routes/cats";
 import { router as special } from './routes/special';
 
-var serve = require('koa-static-server')
+import serve from 'koa-static-folder';
 import cors from '@koa/cors';
 const app: Koa = new Koa();
 //const router: Router = new Router();
@@ -21,7 +21,7 @@ const app: Koa = new Koa();
 
 router.get('/api/v1', welcomeAPI);*/
 // For Document:
-//app.use(serve('./docs'));
+app.use(serve('./docs'));
 app.use(cors());
 app.use(logger());
 app.use(json());

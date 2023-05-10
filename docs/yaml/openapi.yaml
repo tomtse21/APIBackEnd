@@ -10,13 +10,15 @@ info:
     name: Apache 2.0
     url: 'https://www.apache.org/licenses/LICENSE-2.0.html'
 servers:
-  - url: 'https://myapi.com'
+  - url: 'http://localhost:10888/'
     description: Development server
 tags:
   - name: Users
     description: API endpoints for user management.
   - name: Articles
     description: Access and perform CRUD operations on blog entries.
+  - name: Cats
+    description: Access and perform CRUD operations on cat entries.
 paths:
   /articles/{id}:
     parameters:
