@@ -22,30 +22,36 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   mod
 ));
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
-var users_exports = {};
-__export(users_exports, {
-  findByUsername: () => findByUsername,
-  login: () => login,
-  regUser: () => regUser
+var cats_exports = {};
+__export(cats_exports, {
+  add: () => add,
+  deleteCat: () => deleteCat,
+  getAll: () => getAll,
+  getById: () => getById
 });
-module.exports = __toCommonJS(users_exports);
+module.exports = __toCommonJS(cats_exports);
 var db = __toESM(require("../helpers/database"));
-const findByUsername = async (username) => {
-  const query = "SELECT * from users where username = ?";
-  const user = await db.run_query(query, [username]);
-  return user;
+const getById = async (id) => {
+  let query = "SELECT * FROM cats WHERE ID = ? and adopted = false";
+  let values = [id];
+  let data = await db.run_query(query, values);
+  return data;
 };
-const regUser = async (user) => {
-  let keys = Object.keys(user);
-  let values = Object.values(user);
+const getAll = async () => {
+  let query = "SELECT * FROM cats where adopted = false";
+  let data = await db.run_query(query, null);
+  return data;
+};
+const add = async (cat) => {
+  let keys = Object.keys(cat);
+  let values = Object.values(cat);
   let key = keys.join(",");
   let param = "";
   for (let i = 0; i < values.length; i++) {
     param += "? ,";
   }
   param = param.slice(0, -1);
-  let query = `INSERT INTO users (${key}) VALUES (${param})`;
-  console.log(query);
+  let query = `INSERT INTO cats (${key}) VALUES (${param})`;
   try {
     await db.run_insert(query, values);
     return { status: 201 };
@@ -53,15 +59,22 @@ const regUser = async (user) => {
     return err;
   }
 };
-const login = async (username, password) => {
-  const query = "SELECT * from users where username = ? and password = ?";
-  const user = await db.run_query(query, [username, password]);
-  return user;
+const deleteCat = async (id) => {
+  let query = "Update cats set adopted = true where id = ?";
+  let values = [id];
+  console.log(query);
+  try {
+    await db.run_query(query, values);
+    return { status: 201 };
+  } catch (err) {
+    return err;
+  }
 };
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  findByUsername,
-  login,
-  regUser
+  add,
+  deleteCat,
+  getAll,
+  getById
 });
-//# sourceMappingURL=users.js.map
+//# sourceMappingURL=cats.js.map

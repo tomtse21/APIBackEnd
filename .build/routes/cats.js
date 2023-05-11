@@ -22,21 +22,18 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   mod
 ));
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
-var cat_exports = {};
-__export(cat_exports, {
+var cats_exports = {};
+__export(cats_exports, {
   router: () => router
 });
-module.exports = __toCommonJS(cat_exports);
+module.exports = __toCommonJS(cats_exports);
 var import_koa_router = __toESM(require("koa-router"));
 var import_koa_bodyparser = __toESM(require("koa-bodyparser"));
-var model = __toESM(require("../models/cat"));
+var model = __toESM(require("../models/cats"));
 var import_auth = require("../controllers/auth");
 const router = new import_koa_router.default({ prefix: "/api/v1/cats" });
 const cats = [
-  { title: "Hello article", fullText: "some text to fill the body" },
-  { title: "another article", fullText: "again here is some text here to fill" },
-  { title: "coventry university", fullText: "some news about coventry university" },
-  { title: "smart campus", fullText: "smart campus is coming to IVE" }
+  { name: "Hello article", fullText: "some text to fill the body" }
 ];
 const getAll = async (ctx, next) => {
   let cats2 = await model.getAll();
@@ -47,7 +44,7 @@ const getAll = async (ctx, next) => {
   }
   await next();
 };
-const createArticle = async (ctx, next) => {
+const createCat = async (ctx, next) => {
   const body = ctx.request.body;
   let result = await model.add(body);
   if (result.status == 201) {
@@ -62,11 +59,9 @@ const createArticle = async (ctx, next) => {
 const updateCat = async (ctx, next) => {
   let id = +ctx.params.id;
   let c = ctx.request.body;
-  let title = c.title;
-  let fullText = c.fullText;
+  let name = c.name;
   if (id < cats.length + 1 && id > 0) {
-    cats[id - 1].title = title;
-    cats[id - 1].fullText = fullText;
+    cats[id - 1].name = name;
     ctx.status = 200;
     ctx.body = cats;
   } else {
@@ -74,23 +69,34 @@ const updateCat = async (ctx, next) => {
   }
   await next();
 };
-const deleteArticle = async (ctx, next) => {
+const deleteCat = async (ctx, next) => {
   let id = +ctx.params.id;
-  if (id < cats.length + 1 && id > 0) {
-    cats.splice(id - 1, 1);
-    ctx.status = 200;
-    ctx.body = cats;
+  let article = await model.deleteCat(id);
+  if (article.status == 201) {
+    ctx.status = 201;
+    ctx.body = { msg: "Deleted" };
+  } else {
+    ctx.status = 404;
+    ctx.body = { msg: "Error" };
+  }
+  await next();
+};
+const getById = async (ctx, next) => {
+  let id = ctx.params.id;
+  let article = await model.getById(id);
+  if (article.length) {
+    ctx.body = article[0];
   } else {
     ctx.status = 404;
   }
   await next();
 };
 router.get("/", getAll);
-router.post("/", import_auth.basicAuth, (0, import_koa_bodyparser.default)(), validateCat, createCat);
+router.post("/", import_auth.basicAuth, (0, import_koa_bodyparser.default)(), createCat);
 router.put("/:id([0-9]{1,})", import_auth.basicAuth, (0, import_koa_bodyparser.default)(), updateCat);
 router.delete("/:id([0-9]{1,})", import_auth.basicAuth, deleteCat);
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   router
 });
-//# sourceMappingURL=cat.js.map
+//# sourceMappingURL=cats.js.map

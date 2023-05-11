@@ -1,4 +1,4 @@
- {
+{
   "$schema": "http://json-schema.org/draft-04/schema#",
   "id": "/cat",
   "title": "Cat",
@@ -19,18 +19,30 @@
     },
     "imageuri": {
       "description": "URL for main image to show in cat list",
-      "type": "uri"
+      "type": "bytea"
     },
     "adopted": {
       "description": "Is the cat adpot or not",
       "type": "boolean"
     },
     "datecreated": {
-      "description": "Is the cat adpot or not",
+      "description": "date create time",
       "type": ""
     },
     "datemodified": {
-      "description": "Is the cat adpot or not",
+      "description": "date modified time",
+      "type": ""
+    },
+    "age": {
+      "description": "age of cat",
+      "type": ""
+    },
+    "color": {
+      "description": "color of cat",
+      "type": ""
+    },
+    "foundlocation": {
+      "description": "where found the cat",
       "type": ""
     }
   },

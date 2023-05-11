@@ -23,15 +23,29 @@ var import_koa_json = __toESM(require("koa-json"));
 var import_koa_passport = __toESM(require("koa-passport"));
 var import_articles = require("./routes/articles");
 var import_users = require("./routes/users");
+var import_cats = require("./routes/cats");
 var import_special = require("./routes/special");
+var import_koa_static_folder = __toESM(require("koa-static-folder"));
 var import_cors = __toESM(require("@koa/cors"));
-var serve = require("koa-static-server");
+const { koaBody } = require("koa-body");
+const bodyParser = require("koa-bodyparser");
 const app = new import_koa.default();
+app.use((0, import_koa_static_folder.default)("./docs"));
 app.use((0, import_cors.default)());
 app.use((0, import_koa_logger.default)());
 app.use((0, import_koa_json.default)());
+app.use(koaBody({
+  multipart: true,
+  formLimit: "10mb",
+  jsonLimit: "10mb"
+}));
+app.use(bodyParser({
+  formLimit: "10mb",
+  jsonLimit: "10mb"
+}));
 app.use(import_koa_passport.default.initialize());
 app.use(import_users.router.middleware());
+app.use(import_cats.router.middleware());
 app.use(import_articles.router.middleware());
 app.use(import_special.router.middleware());
 app.use(async (ctx, next) => {

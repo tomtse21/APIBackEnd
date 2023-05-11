@@ -24,8 +24,8 @@ module.exports = __toCommonJS(cat_schema_exports);
 const cat = {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "id": "/cat",
-  "title": "Article",
-  "description": "An article in the blog",
+  "title": "Cat",
+  "description": "An Cat in the Shelter",
   "type": "object",
   "properties": {
     "name": {
@@ -36,17 +36,37 @@ const cat = {
       "description": "tpye of cat",
       "type": "string"
     },
-    "decs": {
+    "description": {
       "description": "cat description",
       "type": "string"
     },
-    "url": {
+    "imageuri": {
       "description": "URL for main image to show in cat list",
-      "type": "uri"
+      "type": "bytea"
     },
-    "adopt": {
+    "adopted": {
       "description": "Is the cat adpot or not",
       "type": "boolean"
+    },
+    "datecreated": {
+      "description": "date create time",
+      "type": ""
+    },
+    "datemodified": {
+      "description": "date modified time",
+      "type": ""
+    },
+    "age": {
+      "description": "age of cat",
+      "type": ""
+    },
+    "color": {
+      "description": "color of cat",
+      "type": ""
+    },
+    "foundlocation": {
+      "description": "where found the cat",
+      "type": ""
     }
   },
   "required": ["name"]
