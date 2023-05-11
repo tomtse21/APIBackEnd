@@ -21,8 +21,8 @@ const regUser = async(ctx: RouterContext, next: any) => {
 
 
 const login = async(ctx: RouterContext, next: any) => {
-  console.log("123")
-  var obj = JSON.parse(ctx.request.rawBody);
+  console.log(ctx.request.body)
+  var obj = ctx.request.body;
   
   let result = await model.login(obj['username'],obj['password'])
 

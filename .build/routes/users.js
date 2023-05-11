@@ -44,8 +44,8 @@ const regUser = async (ctx, next) => {
   await next();
 };
 const login = async (ctx, next) => {
-  console.log("123");
-  var obj = JSON.parse(ctx.request.rawBody);
+  console.log(ctx.request.body);
+  var obj = ctx.request.body;
   let result = await model.login(obj["username"], obj["password"]);
   if (result.length == 1) {
     ctx.status = 200;
