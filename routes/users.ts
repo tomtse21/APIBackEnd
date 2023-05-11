@@ -21,8 +21,9 @@ const regUser = async(ctx: RouterContext, next: any) => {
 
 
 const login = async(ctx: RouterContext, next: any) => {
+  console.log("123")
   var obj = JSON.parse(ctx.request.rawBody);
-
+  
   let result = await model.login(obj['username'],obj['password'])
 
   if (result.length == 1 ) {
@@ -36,7 +37,7 @@ const login = async(ctx: RouterContext, next: any) => {
 }
 
 router.post('/', bodyParser(), regUser);
-router.post('/login', bodyParser(),  login); // when using auth login please use basicAuth and validateXXX
+router.post('/login', bodyParser(), login); // when using auth login please use basicAuth and validateXXX
 
 
 export {router};

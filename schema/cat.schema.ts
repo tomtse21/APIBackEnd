@@ -19,7 +19,7 @@ export const cat = {
     },
     "imageuri": {
       "description": "URL for main image to show in cat list",
-      "type": "uri"
+      "type": "bytea"
     },
     "adopted": {
       "description": "Is the cat adpot or not",

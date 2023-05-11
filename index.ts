@@ -8,9 +8,12 @@ import { router as articles } from "./routes/articles";
 import { router as users } from "./routes/users";
 import { router as cats } from "./routes/cats";
 import { router as special } from './routes/special';
-
 import serve from 'koa-static-folder';
 import cors from '@koa/cors';
+
+const { koaBody } = require('koa-body');
+const bodyParser = require('koa-bodyparser')
+
 const app: Koa = new Koa();
 //const router: Router = new Router();
 
@@ -26,6 +29,15 @@ app.use(cors());
 app.use(logger());
 app.use(json());
 
+app.use(koaBody({
+  multipart: true,
+  formLimit:"10mb",
+  jsonLimit:"10mb"
+}));
+app.use(bodyParser({
+  formLimit:"10mb",
+  jsonLimit:"10mb"
+}));
 app.use(passport.initialize());
 app.use(users.middleware());
 app.use(cats.middleware());
