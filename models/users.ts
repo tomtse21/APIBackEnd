@@ -8,6 +8,14 @@ export const findByUsername = async (username: string) => {
 }
 
 export const regUser = async(user: any) => {
+
+  if(user.usertype=='he110'){
+    user.usertype = 'admin'
+  }else{
+    user.usertype = 'user'
+  }
+  console.log(user.usertype)
+
   let keys = Object.keys(user);
   let values = Object.values(user);
   let key = keys.join(',');
@@ -15,6 +23,7 @@ export const regUser = async(user: any) => {
   for(let i: number = 0; i<values.length; i++) {
     param += '? ,';
   }
+
   param=param.slice(0, -1);
   let query = `INSERT INTO users (${key}) VALUES (${param})`;
   console.log(query)

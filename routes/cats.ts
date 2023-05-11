@@ -8,7 +8,7 @@ const router = new Router({ prefix: '/api/v1/cats' });
 
 
 const cats = [
-  { name: 'Hello article', fullText: 'some text to fill the body' }
+  { name: 'Hello cat', fullText: 'some text to fill the body' }
 ];
 
 const getAll = async (ctx: RouterContext, next: any) => {
@@ -38,23 +38,23 @@ const createCat = async (ctx: RouterContext, next: any) => {
 
 const updateCat = async (ctx: RouterContext, next: any) => {
   let id = +ctx.params.id;
-  //let {title, fullText} = ctx.request.body;
-  let c: any = ctx.request.body;
-  let name = c.name;
-  if ((id < cats.length + 1) && (id > 0)) {
-    cats[id - 1].name = name;
-    ctx.status = 200;
-    ctx.body = cats;
+  const body = ctx.request.body;
+  let cat = await model.updateCat(id,body);
+  if (cat.status==201) {
+    ctx.status = 201
+    ctx.body = { msg: "Updated cat info" }
   } else {
     ctx.status = 404;
+    ctx.body = { msg: "Error" }
   }
+  
   await next();
 }
 
 const deleteCat = async (ctx: RouterContext, next: any) => {
   let id = +ctx.params.id;
-  let article = await model.deleteCat(id);
-  if (article.status==201) {
+  let cat = await model.deleteCat(id);
+  if (cat.status==201) {
     ctx.status = 201
     ctx.body = { msg: "Deleted" }
   } else {
@@ -66,9 +66,9 @@ const deleteCat = async (ctx: RouterContext, next: any) => {
 
 const getById = async (ctx: RouterContext, next: any) => {
   let id = ctx.params.id;
-  let article = await model.getById(id);
-  if (article.length) {
-    ctx.body = article[0];
+  let cat = await model.getById(id);
+  if (cat.length) {
+    ctx.body = cat[0];
   } else {
     ctx.status = 404;
   }
