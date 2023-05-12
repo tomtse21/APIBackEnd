@@ -19,11 +19,17 @@ export const add = async(cat: any) => {
   let key = keys.join(',');
   let param = '';
   for(let i: number = 0; i<values.length; i++) {
-    param += '? ,';
+    console.log(keys[i])
+    // if(keys[i]=='imageuri'){
+    //   param += 'decode(? ,"base64"),';
+    // }else{
+      param += '? ,';
+    //}
+    
   }
   param=param.slice(0, -1);
   let query = `INSERT INTO cats (${key}) VALUES (${param})`;
-
+console.log(query)
   try {
     await db.run_insert(query, values);
     return {status: 201};
