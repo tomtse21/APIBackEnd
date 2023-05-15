@@ -55,6 +55,7 @@ export const deleteCat = async(id: any) => {
     var str = `name = '${obj.name}', age = ${obj.age} , color = '${obj.color}' , foundlocation = '${obj.foundlocation}', description  = '${obj.description}' `;
 
     let query = `Update cats set ${str}  where id = ?`;
+    console.log(query)
     let idValues = [id];
     console.log(query)
     try {

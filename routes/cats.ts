@@ -28,16 +28,17 @@ const createCat = async (ctx: RouterContext, next: any) => {
   let result = await model.add(body);
   if (result.status == 201) {
     ctx.status = 201;
-    ctx.body = body;
+    ctx.body = {msg:'Insert data successfully!'};
   } else {
-    ctx.status = 500;
-    ctx.body = { err: "insert data failed" };
+    ctx.status = 404;
+    ctx.body = { msg: "insert data failed" };
   }
   await next();
 }
 
 const updateCat = async (ctx: RouterContext, next: any) => {
   let id = +ctx.params.id;
+  console.log(id);
   const body = ctx.request.body;
   let cat = await model.updateCat(id,body);
   if (cat.status==201) {
