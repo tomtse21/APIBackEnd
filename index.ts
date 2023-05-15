@@ -4,7 +4,6 @@ import logger from "koa-logger";
 import json from "koa-json";
 import passport from 'koa-passport';
 
-import { router as articles } from "./routes/articles";
 import { router as users } from "./routes/users";
 import { router as cats } from "./routes/cats";
 import { router as special } from './routes/special';
@@ -41,7 +40,6 @@ app.use(bodyParser({
 app.use(passport.initialize());
 app.use(users.middleware());
 app.use(cats.middleware());
-app.use(articles.middleware());
 app.use(special.middleware());
 
 
