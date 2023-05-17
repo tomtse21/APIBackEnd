@@ -3,8 +3,42 @@ import bodyParser from "koa-bodyparser";
 import * as model from "../models/messages";
 import { validateCat } from "../controllers/validation";
 import { basicAuth } from "../controllers/auth";
+import nodemailer from "nodemailer";
 
 const router = new Router({ prefix: '/api/v1/messages' });
+
+
+  
+const sendMail = async (ctx: RouterContext, next: any) => {
+
+  const body = JSON.parse(JSON.stringify(ctx.request.body))
+  const testingOption = {
+    from: "test227021367email@gmail.com",
+    to: `${body.email}`,
+    subject: "Message from your website",
+    text: `Hi ${body.name},\n\nThank you for contacting us. Your message: ${body.message} .\n ${body.reply_content} \n\n\n\n Best Regards,\n Tom Tse \n The Pet Shelter`,
+  };
+
+  // Create a Nodemailer transporter
+  const transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
+      user: "test227021367email@gmail.com",
+      pass: "phxoygyiytbuqwfz",
+    },
+  });
+  
+  let messages =  await transporter.sendMail(testingOption);
+
+  if (messages.length) {
+    ctx.body = messages;
+  } else {
+    ctx.body = {};
+  }
+  await next();
+}
 
 const getAll = async (ctx: RouterContext, next: any) => {
   //ctx.body = messages;
@@ -67,6 +101,6 @@ router.get('/', getAll);
 router.post('/', bodyParser(), createMessage);
 router.put('/:id([0-9]{1,})', basicAuth, bodyParser(), updateMessage);
 router.delete('/:id([0-9]{1,})', basicAuth, deleteMessage);
-
+router.post('/send-mail',basicAuth, bodyParser(),sendMail);
 
 export { router };
