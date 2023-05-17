@@ -6,12 +6,14 @@ import passport from 'koa-passport';
 
 import { router as users } from "./routes/users";
 import { router as cats } from "./routes/cats";
+import { router as messages } from "./routes/messages";
 import { router as special } from './routes/special';
 import serve from 'koa-static-folder';
 import cors from '@koa/cors';
 
 const { koaBody } = require('koa-body');
 const bodyParser = require('koa-bodyparser')
+
 
 const app: Koa = new Koa();
 //const router: Router = new Router();
@@ -40,6 +42,7 @@ app.use(bodyParser({
 app.use(passport.initialize());
 app.use(users.middleware());
 app.use(cats.middleware());
+app.use(messages.middleware());
 app.use(special.middleware());
 
 

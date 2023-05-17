@@ -1,4 +1,4 @@
-import { Validator, ValidationError } from 'jsonschema';
+apiimport { Validator, ValidationError } from 'jsonschema';
 import { RouterContext } from 'koa-router';
 import { article } from '../schema/article.schema';
 import { cat } from '../schema/cat.schema';
