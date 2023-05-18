@@ -32,12 +32,12 @@ app.use(json());
 
 app.use(koaBody({
   multipart: true,
-  formLimit:"10mb",
-  jsonLimit:"10mb"
+  formLimit: "10mb",
+  jsonLimit: "10mb"
 }));
 app.use(bodyParser({
-  formLimit:"10mb",
-  jsonLimit:"10mb"
+  formLimit: "10mb",
+  jsonLimit: "10mb"
 }));
 app.use(passport.initialize());
 app.use(users.middleware());

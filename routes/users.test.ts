@@ -1,44 +1,88 @@
-import Router, { RouterContext } from "koa-router";
-import bodyParser from "koa-bodyparser";
-import * as model from "../models/users";
-import { validateUser } from "../controllers/validation";
-import { basicAuth } from "../controllers/auth";
+import Koa from "koa";
+import json from "koa-json";
+import passport from 'koa-passport';
+import { router } from '../routes/users';
+import request from 'supertest';
+const app: Koa = new Koa();
+app.use(json());
+app.use(passport.initialize());
+app.use(router.middleware());
+app.listen(3000);
 
-const router = new Router({ prefix: '/api/v1/users' });
+const prefix = '/api/v1/users'
 
-const regUser = async(ctx: RouterContext, next: any) => {
-    const body = ctx.request.body;
-    let result = await model.regUser(body)
-    if (result.status == 201) {
-      ctx.status = 201;
-      ctx.body = body;
-    } else {
-      ctx.status = 500;
-      ctx.body = { err: "insert data failed" };
-    }
-    await next();
-}
-
-
-const login = async(ctx: RouterContext, next: any) => {
-  console.log(ctx.request.body)
-  // var obj = ctx.request.body;
-  
-  const obj = JSON.parse(JSON.stringify(ctx.request.body))
-  let result = await model.login(obj['username'],obj['password'])
-
-  if (result.length == 1 ) {
-    ctx.status = 200;
-    ctx.body = result;
-  } else if(result.length == 0 ) {
-    ctx.status = 500;
-    ctx.body = { err: "Fail to login, please chcek your username or pssword"};
+function genRandonString(length: any) {
+  var chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_&';
+  var charLength = chars.length;
+  var result = '';
+  for (var i = 0; i < length; i++) {
+    result += chars.charAt(Math.floor(Math.random() * charLength));
   }
-  await next();
+  return result;
 }
 
-router.post('/', bodyParser(), regUser);
-router.post('/login', bodyParser(), login); // when using auth login please use basicAuth and validateXXX
+const randomStrName = genRandonString(10);
+const randomStrPwd = genRandonString(5);
+const randomEmail = `${genRandonString(7)}@gmail.com`
 
+describe('Post / - a simple api endpoint for create account successfully', () => {
 
-export {router};
+  const body = {
+    email: randomEmail,
+    password: randomStrPwd,
+    username: randomStrName
+  }
+  test('Register account', async () => {
+    const result = await
+      request(app.callback()).post(`${prefix}/`)
+        .send(JSON.parse(JSON.stringify(body)));
+    expect(result.statusCode).toEqual(201);
+  })
+
+})
+
+describe('Post / - a simple api endpoint for create account failed', () => {
+
+  const body = {
+    email: randomEmail,
+    password: randomStrPwd + `test`,
+    username: randomStrName
+  }
+  test('Register account', async () => {
+    const result = await
+      request(app.callback()).post(`${prefix}/`)
+        .send(JSON.parse(JSON.stringify(body)));
+    expect(result.statusCode).toEqual(500);
+  })
+
+})
+
+describe('Post / - login endpoint successfully', () => {
+
+  const body = {
+    password: randomStrPwd,
+    username: randomStrName
+  }
+  test('Register account', async () => {
+    const result = await
+      request(app.callback()).post(`${prefix}/login`)
+        .send(JSON.parse(JSON.stringify(body)));
+    expect(result.statusCode).toEqual(200);
+  })
+
+})
+
+describe('Post / - login endpoint failed', () => {
+
+  const body = {
+    password: randomStrPwd + `test`,
+    username: randomStrName
+  }
+  test('Register account', async () => {
+    const result = await
+      request(app.callback()).post(`${prefix}/login`)
+        .send(JSON.parse(JSON.stringify(body)));
+    expect(result.statusCode).toEqual(500);
+  })
+
+})
