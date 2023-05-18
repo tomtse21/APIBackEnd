@@ -5,6 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Run Jest messages",
+            "command": "npx jest messages.test.ts --runInBand  --forceExit",
+            "request": "launch",
+            "type": "node-terminal"
+        },
+      {
+            "name": "Run Jest cats",
+            "command": "npx jest cats.test.ts --runInBand  --forceExit",
+            "request": "launch",
+            "type": "node-terminal"
+        },
+        {
             "name": "My Backend",
             "command": "npm run && npx tsx ./index.ts",
             "request": "launch",
@@ -16,5 +28,6 @@
             "request": "launch",
             "type": "node-terminal"
         }
+  
     ]
 }

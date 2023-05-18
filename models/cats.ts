@@ -19,7 +19,6 @@ export const add = async (cat: any) => {
   let key = keys.join(',');
   let param = '';
   for (let i: number = 0; i < values.length; i++) {
-    console.log(keys[i])
     // if(keys[i]=='imageuri'){
     //   param += 'decode(? ,"base64"),';
     // }else{
@@ -29,7 +28,6 @@ export const add = async (cat: any) => {
   }
   param = param.slice(0, -1);
   let query = `INSERT INTO cats (${key}) VALUES (${param})`;
-  console.log(query)
   try {
     await db.run_insert(query, values);
     return { status: 201 };
@@ -41,7 +39,6 @@ export const add = async (cat: any) => {
 export const deleteCat = async (id: any) => {
   let query = 'Update cats set adopted = true where id = ?';
   let values = [id];
-  console.log(query)
   try {
     await db.run_query(query, values);
     return { status: 201 };
@@ -53,11 +50,8 @@ export const deleteCat = async (id: any) => {
 export const updateCat = async (id: any, obj: any) => {
 
   var str = `name = '${obj.name}', age = ${obj.age} , color = '${obj.color}' , foundlocation = '${obj.foundlocation}', description  = '${obj.description}' `;
-
   let query = `Update cats set ${str}  where id = ?`;
-  console.log(query)
   let idValues = [id];
-  console.log(query)
   try {
     await db.run_query(query, idValues);
     return { status: 201 };

@@ -50,7 +50,6 @@ app.use(special.middleware());
 app.use(async (ctx: RouterContext, next: any) => {
   try {
     await next();
-    console.log(ctx.status)
     if (ctx.status === 404) {
       ctx.body = { err: "Resource not found" };
     }

@@ -12,10 +12,7 @@ const cats = [
 ];
 
 const getAll = async (ctx: RouterContext, next: any) => {
-  //ctx.body = cats;
   let cats = await model.getAll();
-
-  console.log(cats)
   if (cats.length) {
     ctx.status = 201;
     ctx.body = cats;
@@ -68,18 +65,6 @@ const deleteCat = async (ctx: RouterContext, next: any) => {
   }
   await next();
 }
-
-const getById = async (ctx: RouterContext, next: any) => {
-  let id = ctx.params.id;
-  let cat = await model.getById(id);
-  if (cat.length) {
-    ctx.body = cat[0];
-  } else {
-    ctx.status = 404;
-  }
-  await next();
-}
-
 
 router.get('/', getAll);
 router.post('/', basicAuth, bodyParser(), createCat);
