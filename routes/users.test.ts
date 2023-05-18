@@ -22,8 +22,9 @@ const regUser = async(ctx: RouterContext, next: any) => {
 
 const login = async(ctx: RouterContext, next: any) => {
   console.log(ctx.request.body)
-  var obj = ctx.request.body;
+  // var obj = ctx.request.body;
   
+  const obj = JSON.parse(JSON.stringify(ctx.request.body))
   let result = await model.login(obj['username'],obj['password'])
 
   if (result.length == 1 ) {
