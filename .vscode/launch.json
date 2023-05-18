@@ -9,6 +9,12 @@
             "command": "npm run && npx tsx ./index.ts",
             "request": "launch",
             "type": "node-terminal"
+        },
+        {
+            "name": "Run Jest",
+            "command": "npx jest --runInBand  --forceExit",
+            "request": "launch",
+            "type": "node-terminal"
         }
     ]
 }
