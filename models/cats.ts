@@ -7,61 +7,61 @@ export const getById = async (id: any) => {
   return data;
 }
 
-export const getAll = async() => {
+export const getAll = async () => {
   let query = 'SELECT * FROM cats where adopted = false order by id ';
   let data = await db.run_query(query, null);
   return data;
 }
 
-export const add = async(cat: any) => {
+export const add = async (cat: any) => {
   let keys = Object.keys(cat);
   let values = Object.values(cat);
   let key = keys.join(',');
   let param = '';
-  for(let i: number = 0; i<values.length; i++) {
+  for (let i: number = 0; i < values.length; i++) {
     console.log(keys[i])
     // if(keys[i]=='imageuri'){
     //   param += 'decode(? ,"base64"),';
     // }else{
-      param += '? ,';
+    param += '? ,';
     //}
-    
+
   }
-  param=param.slice(0, -1);
+  param = param.slice(0, -1);
   let query = `INSERT INTO cats (${key}) VALUES (${param})`;
-console.log(query)
+  console.log(query)
   try {
     await db.run_insert(query, values);
-    return {status: 201};
-  } catch(err: any) {
+    return { status: 201 };
+  } catch (err: any) {
     return err;
   }
 }
 
-export const deleteCat = async(id: any) => {
+export const deleteCat = async (id: any) => {
   let query = 'Update cats set adopted = true where id = ?';
   let values = [id];
   console.log(query)
   try {
     await db.run_query(query, values);
-    return {status: 201};
-  } catch(err: any) {
+    return { status: 201 };
+  } catch (err: any) {
     return err;
   }
 }
 
-  export const updateCat = async(id: any,obj: any) => {
-    
-    var str = `name = '${obj.name}', age = ${obj.age} , color = '${obj.color}' , foundlocation = '${obj.foundlocation}', description  = '${obj.description}' `;
+export const updateCat = async (id: any, obj: any) => {
 
-    let query = `Update cats set ${str}  where id = ?`;
-    console.log(query)
-    let idValues = [id];
-    console.log(query)
-    try {
-      await db.run_query(query, idValues);
-      return {status: 201};
-    } catch(err: any) {
-      return err;
-    }
+  var str = `name = '${obj.name}', age = ${obj.age} , color = '${obj.color}' , foundlocation = '${obj.foundlocation}', description  = '${obj.description}' `;
+
+  let query = `Update cats set ${str}  where id = ?`;
+  console.log(query)
+  let idValues = [id];
+  console.log(query)
+  try {
+    await db.run_query(query, idValues);
+    return { status: 201 };
+  } catch (err: any) {
+    return err;
+  }
 }

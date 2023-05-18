@@ -4,6 +4,14 @@ import passport from 'koa-passport';
 import { router } from '../routes/users';
 import request from 'supertest';
 const app: Koa = new Koa();
+import { uniqueNamesGenerator, Config, names } from 'unique-names-generator';
+
+const config: Config = {
+  dictionaries: [names]
+}
+
+const characterName: string = uniqueNamesGenerator(config);
+
 app.use(json());
 app.use(passport.initialize());
 app.use(router.middleware());
@@ -21,6 +29,7 @@ function genRandonString(length: any) {
   return result;
 }
 
+
 const randomStrName = genRandonString(10);
 const randomStrPwd = genRandonString(5);
 const randomEmail = `${genRandonString(7)}@gmail.com`
@@ -30,7 +39,7 @@ describe('Post / - a simple api endpoint for create account successfully', () =>
   const body = {
     email: randomEmail,
     password: randomStrPwd,
-    username: randomStrName
+    username: randomStrName + ''
   }
   test('Register account', async () => {
     const result = await
