@@ -17,7 +17,7 @@ const getAll = async (ctx: RouterContext, next: any) => {
     ctx.status = 201;
     ctx.body = cats;
   } else {
-    ctx.status = 404;
+    ctx.status = 204;
     ctx.body = {};
   }
   await next();
@@ -31,7 +31,7 @@ const createCat = async (ctx: RouterContext, next: any) => {
     ctx.status = 201;
     ctx.body = { msg: 'Insert data successfully!' };
   } else {
-    ctx.status = 404;
+    ctx.status = 204;
     ctx.body = { msg: "insert data failed" };
   }
   await next();
@@ -39,14 +39,13 @@ const createCat = async (ctx: RouterContext, next: any) => {
 
 const updateCat = async (ctx: RouterContext, next: any) => {
   let id = +ctx.params.id;
-  console.log(id);
   const body = ctx.request.body;
   let cat = await model.updateCat(id, body);
   if (cat.status == 201) {
     ctx.status = 201
     ctx.body = { msg: "Updated cat info" }
   } else {
-    ctx.status = 404;
+    ctx.status = 204;
     ctx.body = { msg: "Error" }
   }
 
@@ -60,7 +59,7 @@ const deleteCat = async (ctx: RouterContext, next: any) => {
     ctx.status = 201
     ctx.body = { msg: "Deleted" }
   } else {
-    ctx.status = 404;
+    ctx.status = 204;
     ctx.body = { msg: "Error" }
   }
   await next();

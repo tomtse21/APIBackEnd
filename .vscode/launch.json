@@ -10,24 +10,23 @@
             "request": "launch",
             "type": "node-terminal"
         },
-      {
+        {
             "name": "Run Jest cats",
             "command": "npx jest cats.test.ts --runInBand  --forceExit",
             "request": "launch",
             "type": "node-terminal"
         },
         {
-            "name": "My Backend",
-            "command": "npm run && npx tsx ./index.ts",
+            "name": "Run Jest",
+            "command": "npx jest users.test.ts --runInBand  --forceExit",
             "request": "launch",
             "type": "node-terminal"
         },
         {
-            "name": "Run Jest",
-            "command": "npx jest --runInBand  --forceExit",
+            "name": "My Backend",
+            "command": "npm run && npx tsx ./index.ts prod",
             "request": "launch",
             "type": "node-terminal"
         }
-  
     ]
 }

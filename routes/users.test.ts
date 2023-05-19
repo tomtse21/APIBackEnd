@@ -39,7 +39,7 @@ describe('Post / - a simple api endpoint for create account successfully', () =>
   const body = {
     email: randomEmail,
     password: randomStrPwd,
-    username: randomStrName + ''
+    username: characterName
   }
   test('Register account', async () => {
     const result = await
@@ -55,13 +55,13 @@ describe('Post / - a simple api endpoint for create account failed', () => {
   const body = {
     email: randomEmail,
     password: randomStrPwd + `test`,
-    username: randomStrName
+    username: characterName
   }
   test('Register account', async () => {
     const result = await
       request(app.callback()).post(`${prefix}/`)
         .send(JSON.parse(JSON.stringify(body)));
-    expect(result.statusCode).toEqual(500);
+    expect(result.statusCode).toEqual(204);
   })
 
 })
@@ -70,9 +70,9 @@ describe('Post / - login endpoint successfully', () => {
 
   const body = {
     password: randomStrPwd,
-    username: randomStrName
+    username: characterName
   }
-  test('Register account', async () => {
+  test('Login  account successfully', async () => {
     const result = await
       request(app.callback()).post(`${prefix}/login`)
         .send(JSON.parse(JSON.stringify(body)));
@@ -85,13 +85,13 @@ describe('Post / - login endpoint failed', () => {
 
   const body = {
     password: randomStrPwd + `test`,
-    username: randomStrName
+    username: characterName
   }
-  test('Register account', async () => {
+  test('Login account failed', async () => {
     const result = await
       request(app.callback()).post(`${prefix}/login`)
         .send(JSON.parse(JSON.stringify(body)));
-    expect(result.statusCode).toEqual(500);
+    expect(result.statusCode).toEqual(204);
   })
 
 })

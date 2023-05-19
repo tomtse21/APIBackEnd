@@ -16,15 +16,6 @@ app.listen(3000);
 
 const prefix = '/api/v1/messages'
 
-function genRandonString(length: any) {
-  var chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_&';
-  var charLength = chars.length;
-  var result = '';
-  for (var i = 0; i < length; i++) {
-    result += chars.charAt(Math.floor(Math.random() * charLength));
-  }
-  return result;
-}
 // retrieve message session start
 describe('Get / - a simple api endpoint for retrieve messages list successfully', () => {
   test('Retrieve all message information', async () => {
@@ -39,7 +30,7 @@ describe('Get / - a simple api endpoint for retrieve messages list failed', () =
   test('Retrieve all message information', async () => {
     const result = await
       request(app.callback()).get(`${prefix}/`);
-    expect(result.status).toEqual(500);
+    expect(result.status).toEqual(204);
   })
 
 })
@@ -54,13 +45,13 @@ describe('POST / - create message info successfully', () => {
     name: randomName
   }
   const expectReturnBody = { msg: "Insert data successfully!" }
-  
+
   test('Retrieve all message information', async () => {
-    
+
     const result = await
       request(app.callback()).post(`${prefix}/`)
-      .auth('bob','1234')
-      .send(JSON.parse(JSON.stringify(body)));
+        .auth('bob', '1234')
+        .send(JSON.parse(JSON.stringify(body)));
     expect(result.body).toEqual(expectReturnBody);
     expect(result.status).toEqual(201);
   })
@@ -75,15 +66,15 @@ describe('POST / - create message info failed', () => {
     name: randomName
   }
   const expectReturnBody = { msg: "insert data failed!" }
-  
+
   test('Retrieve all message information', async () => {
-    
+
     const result = await
       request(app.callback()).post(`${prefix}/`)
-      .auth('bob','1234')
-      .send(JSON.parse(JSON.stringify(body)));
+        .auth('bob', '1234')
+        .send(JSON.parse(JSON.stringify(body)));
     // expect(result.body).toEqual({expectReturnBody});
-    expect(result.status).toEqual(500);
+    expect(result.status).toEqual(204);
   })
 
 })
@@ -94,28 +85,28 @@ describe('POST / - create message info failed', () => {
 describe('DELETE / - delete message info successfully', () => {
   const id = 18;
   const expectReturnBody = { msg: "Deleted" }
-  
+
   test('Delete message info', async () => {
-    
+
     const result = await
       request(app.callback()).delete(`${prefix}/${id}`)
-      .auth('bob','1234')
+        .auth('bob', '1234')
     expect(result.body).toEqual(expectReturnBody);
     expect(result.status).toEqual(201);
   })
 })
 
-describe.only('DELETE / - delete message info successfully', () => { //#
+describe('DELETE / - delete message info failed', () => { //#
   const id = null;
   const expectReturnBody = { msg: "Error" }
-  
+
   test('Delete message info', async () => {
-    
+
     const result = await
       request(app.callback()).delete(`${prefix}/${id}`)
-      .auth('bob','1234')
+        .auth('bob', '1234')
     expect(result.body).toEqual(expectReturnBody);
-    expect(result.status).toEqual(500);
+    expect(result.status).toEqual(204);
   })
 })
 //delete message session end
@@ -125,17 +116,17 @@ describe('POST / - reply message info successfully', () => {
     cats_id: 127,
     email: "test227021367email@gmail.com",
     message: "i want this",
-    reply_content:" This is reply message ",
+    reply_content: " This is reply message ",
     name: 'Tom'
   }
   const expectReturnBody = { msg: "Error" }
-  
+
   test('reply message info', async () => {
-    
+
     const result = await
       request(app.callback()).post(`${prefix}/send-mail`)
-      .auth('bob','1234')
-      .send(JSON.parse(JSON.stringify(body)));
+        .auth('bob', '1234')
+        .send(JSON.parse(JSON.stringify(body)));
     expect(result.status).toEqual(201);
   })
 
@@ -146,18 +137,18 @@ describe('POST / - reply message info failed', () => {
     cats_id: 127,
     email: null,
     message: "i want this",
-    reply_content:" This is reply message ",
+    reply_content: " This is reply message ",
     name: 'Tom'
   }
   const expectReturnBody = { msg: "Error" }
-  
+
   test('reply message info', async () => {
-    
+
     const result = await
       request(app.callback()).post(`${prefix}/send-mail`)
-      .auth('bob','1234')
-      .send(JSON.parse(JSON.stringify(body)));
-    expect(result.status).toEqual(500);
+        .auth('bob', '1234')
+        .send(JSON.parse(JSON.stringify(body)));
+    expect(result.status).toEqual(204);
   })
 
 })

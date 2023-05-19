@@ -14,7 +14,6 @@ export const regUser = async (user: any) => {
   } else {
     user.usertype = 'user'
   }
-  console.log(user.usertype)
 
   let keys = Object.keys(user);
   let values = Object.values(user);
@@ -26,7 +25,6 @@ export const regUser = async (user: any) => {
 
   param = param.slice(0, -1);
   let query = `INSERT INTO users (${key}) VALUES (${param})`;
-  console.log(query)
   try {
     await db.run_insert(query, values);
     return { status: 201 };
@@ -37,7 +35,6 @@ export const regUser = async (user: any) => {
 
 export const login = async (username: string, password: string) => {
   const query = 'SELECT * from users where username = ? and password = ?';
-  console.log(query)
   const user = await db.run_query(query, [username, password]);
   return user;
 }

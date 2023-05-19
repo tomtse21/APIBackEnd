@@ -8,7 +8,7 @@ import nodemailer from "nodemailer";
 const router = new Router({ prefix: '/api/v1/messages' });
 
 
-  
+
 const sendMail = async (ctx: RouterContext, next: any) => {
 
   const body = JSON.parse(JSON.stringify(ctx.request.body))
@@ -29,15 +29,14 @@ const sendMail = async (ctx: RouterContext, next: any) => {
       pass: "dhdpobcfyenzcxhn",
     },
   });
-  
-  let messages =  await transporter.sendMail(testingOption);
-  console.log(messages)
-  if (messages.accepted.length==1) {
+
+  let messages = await transporter.sendMail(testingOption);
+  if (messages.accepted.length == 1) {
     ctx.body = messages;
     ctx.status = 201;
   } else {
     ctx.body = {};
-    ctx.status = 500;
+    ctx.status = 204;
   }
   await next();
 }
@@ -45,12 +44,12 @@ const sendMail = async (ctx: RouterContext, next: any) => {
 const getAll = async (ctx: RouterContext, next: any) => {
   //ctx.body = messages;
   let messages = await model.getAll();
-  if (messages.length) {
+  if (messages.length >= 1) {
     ctx.body = messages;
     ctx.status = 201
   } else {
     ctx.body = {};
-    ctx.status = 500
+    ctx.status = 204
   }
   await next();
 }
@@ -61,9 +60,9 @@ const createMessage = async (ctx: RouterContext, next: any) => {
   let result = await model.add(body);
   if (result.status == 201) {
     ctx.status = 201;
-    ctx.body = {msg:'Insert data successfully!'};
+    ctx.body = { msg: 'Insert data successfully!' };
   } else {
-    ctx.status = 500;
+    ctx.status = 204;
     ctx.body = { msg: "insert data failed!" };
   }
   await next();
@@ -74,11 +73,11 @@ const createMessage = async (ctx: RouterContext, next: any) => {
 const deleteMessage = async (ctx: RouterContext, next: any) => {
   let id = +ctx.params.id;
   let message = await model.deleteMessage(id);
-  if (message.status==201) {
+  if (message.status == 201) {
     ctx.status = 201
     ctx.body = { msg: "Deleted" }
   } else {
-    ctx.status = 500;
+    ctx.status = 204;
     ctx.body = { msg: "Error" }
   }
   await next();
@@ -87,6 +86,6 @@ const deleteMessage = async (ctx: RouterContext, next: any) => {
 router.get('/', getAll);
 router.post('/', bodyParser(), createMessage);
 router.delete('/:id([0-9]{1,})', basicAuth, deleteMessage);
-router.post('/send-mail',basicAuth, bodyParser(),sendMail);
+router.post('/send-mail', basicAuth, bodyParser(), sendMail);
 
 export { router };
