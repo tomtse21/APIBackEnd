@@ -17,7 +17,7 @@
             "type": "node-terminal"
         },
         {
-            "name": "Run Jest",
+            "name": "Run Jest user",
             "command": "npx jest users.test.ts --runInBand  --forceExit",
             "request": "launch",
             "type": "node-terminal"
