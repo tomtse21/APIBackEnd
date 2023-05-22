@@ -17,6 +17,8 @@ tags:
     description: API endpoints for user management.
   - name: Cats
     description: Access and perform CRUD operations on cat entries.
+  - name: Messages
+    description: API endpoints for send email.
 paths:
   /cats:
     get:
@@ -27,27 +29,8 @@ paths:
       responses:
         '200':
           description: Return exisiting cat list from database
-        '404':
+        '204':
           description: No data from database
-
-  /cats/{id}:
-    parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-        description: Id of the cat
-    get:
-      tags:
-        - Cats
-      description:
-        Get cat by id.
-      responses:
-        '200':
-          description: View of an cat record.
-        '404':
-          description: Cat was not found in the DB.
     post:
       security:
         - basicAuth: []    
@@ -65,6 +48,15 @@ paths:
         responses:
           '201':
             description: Cats created
+
+  /cats/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+        description: Id of the cat
     put:
       security:
         - basicAuth: []
@@ -78,7 +70,7 @@ paths:
       responses:
         '200':
           description: View of an cat record.
-        '404':
+        '204':
           description: Cat was not found in the DB.
     delete:
       tags:
@@ -107,7 +99,7 @@ paths:
       responses:
         '201':
           description: Register successfully
-        '500':
+        '204':
           description: Insert Data failed   
           
   /users/login:
@@ -125,5 +117,94 @@ paths:
       responses:
         '200':
           description: Login successfully
-        '500':
+        '204':
           description: Login Fail  
+  
+
+  /messages:
+    get:
+      tags:
+        - Messages
+      description:
+        Get all message
+      responses:
+        '200':
+          description: Return exisiting message list from database
+        '204':
+          description: No data from database
+    post:
+      security:
+        - basicAuth: []    
+      tags:
+        - Messages
+      description:
+        Create a new message
+      requestBody:
+        description: A new message data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ./message.json
+        responses:
+          '201':
+            description: Messages created
+          '204':
+            description: Create message failed.
+
+  /messages/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+        description: Id of the message
+    put:
+      security:
+        - basicAuth: []
+      tags:
+        - Messages
+      description: Update message by ID.
+      content:
+        application/json:
+          schema:
+            $ref: ./message.json
+      responses:
+        '200':
+          description: View of an message record.
+        '204':
+          description: Message was not found in the DB.
+    delete:
+      tags:
+        - Messages
+      description:
+        Delete message by ID.
+      responses:
+        '200':
+          description: View of an message record.
+        '404':
+          description: Cat was not found in the DB.
+
+  /messages/send-mail:
+    post:
+      security:
+        - basicAuth: []
+      tags:
+        - Messages
+      description: Send mail to client
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ./message.json
+      content:
+        application/json:
+          schema:
+            $ref: ./message.json
+      responses:
+        '200':
+          description: Send email successfully
+        '204':
+          description: Cant send email.    

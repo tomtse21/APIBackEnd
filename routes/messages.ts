@@ -14,7 +14,8 @@ const sendMail = async (ctx: RouterContext, next: any) => {
   const body = JSON.parse(JSON.stringify(ctx.request.body))
   const testingOption = {
     from: "test227021367email@gmail.com",
-    to: `${body.email}`,
+    // to: `${body.email}`,
+    to: "test227021367email@gmail.com",
     subject: "Message from your website",
     text: `Hi ${body.name},\n\nThank you for contacting us. Your message: ${body.message} .\n ${body.reply_content} \n\n\n\n Best Regards,\n Tom Tse \n The Pet Shelter`,
   };
